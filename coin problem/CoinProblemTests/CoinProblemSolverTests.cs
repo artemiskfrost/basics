@@ -5,9 +5,9 @@ namespace CoinProblem
 	{
 		public struct TestData
 		{
-			public int[] CoinValues => new[] { 1, 2, 3 };
-			public long[] Totals => new[] { 0, 1, 2, 3, 4, 5, 6 };
-			public long[] ExpectedResults => new[] { 0, 1, 2, 4, 7, 15, 28 };
+			public static int[] CoinValues => new[] { 1, 2, 3 };
+			public static long[] Totals => new[] { 0L, 1L, 2L, 3L, 4L, 5L, 6L };
+			public static long[] ExpectedResults => new[] { 0L, 1L, 2L, 4L, 7L, 15L, 28L };
 		}
 
 
@@ -22,7 +22,7 @@ namespace CoinProblem
 
 
 		[TestMethod]
-		[DataRow( TestData.Totals, TestData.CoinValues, TestData.ExpectedResults )]
+		[DynamicData( nameof( Data_Success_Solve ), DynamicDataSourceType.Method )]
 		public void Test_Success_Solve( long[] totals, int[] coinValues, long[] expected )
 		{
 			var actual = new List<long>();
@@ -30,7 +30,22 @@ namespace CoinProblem
 			{
 				actual.Add( solver.Solve( total, coinValues ) );
 			}
+			Console.WriteLine( "actual" );
+			foreach ( var value in actual )
+			{
+				Console.WriteLine( $"\t{ value }" );
+			}
+			Console.WriteLine( "expected" );
+			foreach ( var value in expected )
+			{
+				Console.WriteLine( $"\t{ value }" );
+			}
 			CollectionAssert.AreEqual( expected, actual );
+		}
+
+		private static IEnumerable< object[] > Data_Success_Solve()
+		{
+			yield return new object[] { TestData.Totals, TestData.CoinValues, TestData.ExpectedResults };
 		}
 	}
 }

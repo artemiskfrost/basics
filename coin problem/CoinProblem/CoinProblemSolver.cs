@@ -3,7 +3,7 @@ namespace CoinProblem
 	public class CoinProblemSolver
 	{
 		private Dictionary< long, long > SubtotalSolutions = new();
-		private int[] CoinValues { get; set; } = Array.Empty<int>;
+		private int[] CoinValues { get; set; } = Array.Empty<int>();
 
 
 		public long Solve( long total, int[] coinValues )
@@ -26,9 +26,9 @@ namespace CoinProblem
 				return solutionCount;
 			}
 
-			foreach ( var coinValue in coinValues )
+			foreach ( var coinValue in CoinValues )
 			{
-				solutionCount += SolveSubtotal( total - coinValue );
+				solutionCount += SolveSubtotal( subtotal - coinValue );
 			}
 			SubtotalSolutions.Add( subtotal, solutionCount );
 			return solutionCount;
