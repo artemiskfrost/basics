@@ -11,7 +11,7 @@ namespace CoinProblem
 		}
 
 
-		public CoinProblemSolver solver;
+		public CoinProblemSolver? solver;
 
 
 		[TestInitialize]
@@ -28,7 +28,7 @@ namespace CoinProblem
 			var actual = new List<long>();
 			foreach ( var total in totals )
 			{
-				actual.Add( solver.Solve( total, coinValues ) );
+				actual.Add( solver!.Solve( total, coinValues ) );
 			}
 			Console.WriteLine( "actual" );
 			foreach ( var value in actual )
