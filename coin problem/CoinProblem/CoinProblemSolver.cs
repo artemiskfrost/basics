@@ -38,19 +38,7 @@ namespace CoinProblem
 				return 0;
 			}
 
-			long solutionCount = 0;
-			// if ( SubtotalSolutions.TryGetValue( subtotal, out solutionCount ) )
-			// {
-			// 	return solutionCount;
-			// }
-
-			for ( var i = 0; i < coinPoolSize; ++i )
-			{
-				var coinValue = CoinValues[ i ];
-				solutionCount += SolveSubtotal( subtotal - coinValue, coinPoolSize - 1 );
-			}
-			// SubtotalSolutions.Add( subtotal, solutionCount );
-			return solutionCount;
+			return SolveSubtotal( subtotal, coinPoolSize - 1 ) + SolveSubtotal( subtotal - CoinValues[ coinPoolSize - 1 ], coinPoolSize );
 		}
 
 		private static int[] SortCoinValues( int[] coinValues )
