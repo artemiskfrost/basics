@@ -8,30 +8,56 @@ namespace CoinProblem
 
 		public long Solve( long total, int[] coinValues )
 		{
-			CoinValues = coinValues;
-			return SolveSubtotal( total );
+			if ( total < 1 )
+			{
+				return 0;
+			}
+
+			CoinValues = SortCoinValues( coinValues );
+			return SolveSubtotal( total, coinValues.Length );
 		}
 
 
-		private long SolveSubtotal( long subtotal )
+		private long SolveSubtotal( long subtotal, int coinPoolSize )
 		{
-			if ( subtotal < 1 )
+			bool isValidSolution = subtotal == 0;
+			if ( isValidSolution )
+			{
+				return 1;
+			}
+
+			bool isInvalidSolution = subtotal < 0;
+			if ( isInvalidSolution )
+			{
+				return 0;
+			}
+
+			bool isCoinPoolEmpty = coinPoolSize < 1;
+			if ( isCoinPoolEmpty )
 			{
 				return 0;
 			}
 
 			long solutionCount = 0;
-			if ( SubtotalSolutions.TryGetValue( subtotal, out solutionCount ) )
-			{
-				return solutionCount;
-			}
+			// if ( SubtotalSolutions.TryGetValue( subtotal, out solutionCount ) )
+			// {
+			// 	return solutionCount;
+			// }
 
-			foreach ( var coinValue in CoinValues )
+			for ( var i = 0; i < coinPoolSize; ++i )
 			{
-				solutionCount += SolveSubtotal( subtotal - coinValue );
+				var coinValue = CoinValues[ i ];
+				solutionCount += SolveSubtotal( subtotal - coinValue, coinPoolSize - 1 );
 			}
-			SubtotalSolutions.Add( subtotal, solutionCount );
+			// SubtotalSolutions.Add( subtotal, solutionCount );
 			return solutionCount;
+		}
+
+		private static int[] SortCoinValues( int[] coinValues )
+		{
+			var result = coinValues.ToList();
+			result.Sort( ( a, b ) => b.CompareTo( a ) );
+			return result.ToArray();
 		}
 	}
 }
