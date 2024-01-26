@@ -6,8 +6,8 @@ namespace CoinProblem
 		public struct TestData
 		{
 			public static int[] CoinValues => [ 1, 2, 3 ];
+			public static long[] ExpectedResults => [ 0L, 1L, 2L, 3L, 4L, 5L, 7L, 8L, 10L, 12L ];
 			public static long[] Totals => [ 0L, 1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L ];
-			public static long[] ExpectedResults => [ 0L, 1L, 2L, 3L, 4L, 5L, 7, 8, 10, 12 ];
 		}
 
 
